@@ -48,7 +48,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - name: Select NestJS major
         run: npm install --no-save --package-lock=false @nestjs/common@${{ matrix.nest }} @nestjs/core@${{ matrix.nest }} @nestjs/testing@${{ matrix.nest }} @nestjs/platform-express@${{ matrix.nest }}
-      - run: npm run typecheck
+      - run: npm run typecheck --workspace @simply-connect/nestjs
       - run: npm test --workspace @simply-connect/nestjs
       - run: npm run build --workspace @simply-connect/nestjs
 

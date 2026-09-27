@@ -38,7 +38,8 @@
   },
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap --external @nestjs/common --external @nestjs/core --external @simply-connect/node --external reflect-metadata --external rxjs",
-    "test": "vitest run packages/nestjs/test"
+    "test": "vitest run test",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
     "@simply-connect/node": "0.1.0"
