@@ -1,0 +1,48 @@
+{
+  "name": "@simply-connect/node",
+  "version": "0.1.0",
+  "description": "Official dependency-light Node.js client for the Simply Connect External API",
+  "keywords": [
+    "simply-connect",
+    "sms",
+    "telephony",
+    "nodejs",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlos1998/simply-connect-node.git",
+    "directory": "packages/node"
+  },
+  "homepage": "https://simply-connect.ovh/integrations/node-nestjs",
+  "bugs": "https://github.com/karlos1998/simply-connect-node/issues",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap",
+    "test": "vitest run packages/node/test"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

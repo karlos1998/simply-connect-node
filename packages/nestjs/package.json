@@ -1,0 +1,56 @@
+{
+  "name": "@simply-connect/nestjs",
+  "version": "0.1.0",
+  "description": "Official NestJS module and opt-in developer panel for Simply Connect",
+  "keywords": [
+    "simply-connect",
+    "nestjs",
+    "sms",
+    "telephony",
+    "typescript"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/karlos1998/simply-connect-node.git",
+    "directory": "packages/nestjs"
+  },
+  "homepage": "https://simply-connect.ovh/integrations/node-nestjs",
+  "bugs": "https://github.com/karlos1998/simply-connect-node/issues",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --sourcemap --external @nestjs/common --external @nestjs/core --external @simply-connect/node --external reflect-metadata --external rxjs",
+    "test": "vitest run packages/nestjs/test"
+  },
+  "dependencies": {
+    "@simply-connect/node": "0.1.0"
+  },
+  "peerDependencies": {
+    "@nestjs/common": ">=10 <13",
+    "@nestjs/core": ">=10 <13",
+    "reflect-metadata": ">=0.1.13",
+    "rxjs": ">=7.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}

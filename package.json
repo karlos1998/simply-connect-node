@@ -1,0 +1,41 @@
+{
+  "name": "simply-connect-node-workspace",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Official Node.js and NestJS integration for Simply Connect",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "examples/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces --if-present",
+    "check": "npm run format:check && npm run lint && npm run typecheck && npm test && npm run build && npm run pack:check && npm run contract:check",
+    "contract:check": "node scripts/verify-openapi.mjs",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "oxlint .",
+    "pack:check": "node scripts/verify-packages.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^12.0.0",
+    "@nestjs/core": "^12.0.0",
+    "@nestjs/platform-express": "^12.0.0",
+    "@nestjs/testing": "^12.0.0",
+    "@swc/core": "^1.16.2",
+    "@types/node": "^24.10.0",
+    "oxlint": "^1.18.0",
+    "prettier": "^3.6.2",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "tsup": "^8.5.0",
+    "typescript": "^6.0.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22.12"
+  }
+}

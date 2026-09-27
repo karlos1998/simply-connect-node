@@ -1,0 +1,71 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  node:
+    name: Node.js ${{ matrix.node }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [22.12, 24, 26]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm audit
+        if: ${{ matrix.node == 24 }}
+      - run: npm run format:check
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm run pack:check
+
+  nestjs:
+    name: NestJS ${{ matrix.nest }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        nest: [10, 11, 12]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: Select NestJS major
+        run: npm install --no-save --package-lock=false @nestjs/common@${{ matrix.nest }} @nestjs/core@${{ matrix.nest }} @nestjs/testing@${{ matrix.nest }} @nestjs/platform-express@${{ matrix.nest }}
+      - run: npm run typecheck
+      - run: npm test --workspace @simply-connect/nestjs
+      - run: npm run build --workspace @simply-connect/nestjs
+
+  contract:
+    name: External API contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      - name: Checkout canonical OpenAPI contract
+        uses: actions/checkout@v6
+        with:
+          repository: karlos1998/modern-simply-connect-api
+          ssh-key: ${{ secrets.API_CONTRACT_DEPLOY_KEY }}
+          path: api-contract
+          sparse-checkout: contracts/openapi/v1/openapi.json
+          sparse-checkout-cone-mode: false
+      - run: node scripts/verify-openapi.mjs api-contract/contracts/openapi/v1/openapi.json
