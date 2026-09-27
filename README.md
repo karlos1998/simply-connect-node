@@ -26,7 +26,7 @@ npm install \
   https://github.com/karlos1998/simply-connect-node/releases/download/v0.1.0/simply-connect-nestjs-0.1.0.tgz
 ```
 
-The canonical npm names are reserved in package metadata. A future registry release will use the same
+The canonical npm names are set in package metadata. A future registry release will use the same
 `@simply-connect/node` and `@simply-connect/nestjs` imports without code changes.
 
 ## Node.js
